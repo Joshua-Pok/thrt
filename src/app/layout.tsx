@@ -12,7 +12,9 @@ import { MainLayout } from '@venti/layout';
 import { inter } from '@venti/theme/dist/next-fonts';
 import getEnv from './utils/env';
 
-import {VehicleProvider} from './components/Provider/VehicleProvider'
+import { PoolProvider } from './components/Provider/PoolProvider';
+import { ConsoleProvider } from './components/Provider/ConsoleProvider';
+import { VehicleProvider } from './components/Provider/VehicleProvider';
 import { CLIENT_SIDE_NEXT_PUBLIC_HOSTNAME, CLIENT_SIDE_NEXT_PUBLIC_PREFIX } from './utils/constants';
 
 export default function RootLayout({
@@ -35,7 +37,13 @@ export default function RootLayout({
                   prefix={CLIENT_SIDE_NEXT_PUBLIC_PREFIX}
                   showTheme={false}
                 >
-                  {children}
+                  <PoolProvider>
+                    <ConsoleProvider>
+                      <VehicleProvider>
+                        {children}
+                      </VehicleProvider>
+                    </ConsoleProvider>
+                  </PoolProvider>
                 </MainLayout>
                 </AuthGuard>
             </SessionProvider>

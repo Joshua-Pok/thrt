@@ -1,40 +1,29 @@
 import { PlusOutlined } from '@ant-design/icons';
 import '../Scss/Subheader.scss';
-import { Menu, Button } from 'antd';
-export default function SubHeader() {
-  const ConsoleItems = [
-    {
-      label: 'Manual',
-      key: 'Manual',
-    },
-    {
-      label: 'Testing',
-      key: 'Testing',
-    },
-    {
-      label: 'Production',
-      key: 'Production',
-    },
-    {
-      label: 'Kessel Run',
-      key: 'Kessel Run',
-    },
-    {
-      label: 'Manual',
-      key: 'Manual',
-    },
-  ];
+import { Menu, Button, MenuProps } from 'antd';
+import { Pool } from '@/app/types';
+
+interface SubHeaderProps {
+  pools: Pool[];
+  onPoolSelect: (poolIndex: number) => void;
+}
+
+export default function SubHeader({ pools, onPoolSelect }: SubHeaderProps) {
+  const poolMenuItems: MenuProps['items'] = pools.map((pool, index) => ({
+    label: pool.id,
+    key: pool.id,
+    onClick: () => onPoolSelect(index)
+  }));
+
   return (
-    <>
-      <div className="subheader-wrapper">
-        <div className="left-section">
-          <Menu items={ConsoleItems} mode="horizontal"></Menu>
-          <Button>Add Console</Button>
-        </div>
-        <div className="right-section">
-            <Button icon={<PlusOutlined/>}>Add Console</Button>
-        </div>
+    <div className="subheader-wrapper">
+      <div className="left-section">
+        <Menu items={poolMenuItems} mode="horizontal" />
+        <Button>Add Pool</Button>
       </div>
-    </>
+      <div className="right-section">
+        <Button icon={<PlusOutlined />}>Add Pool</Button>
+      </div>
+    </div>
   );
 }
